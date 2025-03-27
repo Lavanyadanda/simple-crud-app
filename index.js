@@ -1,5 +1,4 @@
-console.log("hello");
-//if you run npm run server, where server is index.js file updated in pacage.json
+
 
 const express = require("express");
 const app = express();
@@ -10,19 +9,16 @@ let port = 3000;
 //load environment variables
 dotenv.config();
 
-//use  middleware for using json in express js,by default json is not supported
+//use  middleware for using json in express js,by default json is not supported in express
 app.use(express.json());
 
-//to send data in the form of 'forms lie form datause middleware 
+//to send data in the form of 'form data " then use this middleware 
 app.use(express.urlencoded({extended:false}))
 app.get("/", (req, res) => {
   res.send("hello from node apii");
 });
 
 app.post("/api/products", async (req, res) => {
-  //     //console.log(req.body);
-  //    res.send("Data received");
-  // //    res.send(req.body);
 
   try {
     const product = await Product.create(req.body);
@@ -34,7 +30,7 @@ app.post("/api/products", async (req, res) => {
 
 app.get("/api/products", async (req, res) => {
   try {
-    const product = await Product.find({}); //find all products in Product table and store in product variabel
+    const product = await Product.find({}); //find all products in Product table and store in product variable
     res.status(200).json(product);
   } catch (err) {
     res.status(500).json({ messgae: err.message });
@@ -88,7 +84,7 @@ app.delete("/api/product/:id", async (req, res) => {
 
 mongoose
   .connect(process.env.MONGO_URL)
-  //mongoose.connect("mongodb+srv://admin:abcd1234@cluster0.dq9ihnd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0mongodb+srv://admin:<abcd1234>@cluster0.dq9ihnd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  
   .then(() => console.log("successfully connected to db"))
   .catch((err) => console.log("error in connection", err));
 app.listen(3000, () => console.log(`server is running at ${port}`));
